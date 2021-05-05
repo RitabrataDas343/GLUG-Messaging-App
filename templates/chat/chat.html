@@ -1,0 +1,75 @@
+{% extends 'chat/index.html' %} {% block body %}
+
+<head>
+    <title>GLUG Messaging App</title>
+    <style type="text/css">
+        .conta {
+            text-indent: 35px;
+        }
+    </style>
+</head>
+<nav class="deep green lighten-1" style="box-shadow: 0 0 0 15px deepgreen;">
+    <div class="nav-wrapper conta">
+        <a href="#" class="brand-logo" style="color: white; font-family: 'Times New Roman', Times, serif; font-size: 35px; ">Welcome to GLUG Messaging App</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="" style="font-size: 25px; text-align: center; text-indent: 5px">Hi, {{ request.user.username }} !!!</a></li>
+            <li><u><a href="{% url 'logout' %}" style="font-size: 25px; color: blue; text-indent: 2px;">Logout</a></u></li>
+        </ul>
+    </div>
+</nav>
+<div class="section" style="height: 80vh;">
+    <div class="row">
+        <div class="col s3">
+            <div class="card">
+                <div class="collection">
+                    {% for user in users %}
+                    <a href="{% url 'chat' request.user.id user.id %}" id="user{{ user.id }}" class="collection-item row">
+                        <div class="col s8">
+                            <span class="title" style="font-weight: bolder; text-align: center; text-indent: 5px">{{ user.username }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col s9">
+            <div class="card">
+                <div id="board" class="black lighten-3" style="height: 70vh; padding: 15px; overflow-y: scroll;">
+                    {% block messages %} {% endblock %}
+                </div>
+                <form id="chat-box" class="form-group {% block hide %}hide{% endblock %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col s11">
+                            <div class="input-field">
+                                <input id="id_message" name="message" type="text" placeholder="Type your message.." style="color: black; font-family: 'Times New Roman', Times, serif;">
+                            </div>
+                        </div>
+                        <div class="col s1" style="line-height: 80px">
+                            <button class="btn btn-floating deep green waves-effect waves-light"><i class="material-icons">send</i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% load staticfiles %}
+<script src="{% static 'js/chat.js' %}"></script>
+<script>
+    // For receiving
+    sender_id = "{{ receiver.id }}";
+    receiver_id = "{{ request.user.id }}";
+
+    //For sending
+    $(function() {
+        scrolltoend();
+        $('#chat-box').on('submit', function(event) {
+            event.preventDefault();
+            var message = $('#id_message');
+            send('{{ request.user.username }}', '{{ receiver.username }}', message.val());
+            message.val('');
+        })
+    })
+</script>
+{% endblock %}
