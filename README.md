@@ -1,6 +1,7 @@
 # GLUG-Messaging-App
 
 This is GLUG Messaging App built in Django and Django-Rest-Framework.
+
 ![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)<br>
 
 > The app allows you to chat with other GLUG members in realtime. This app is basically inspired from WhatsApp.
