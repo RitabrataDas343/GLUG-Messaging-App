@@ -1,37 +1,203 @@
 {% extends 'chat/index.html' %} {% block form %}
-<h3 style="color: black; font-weight: bolder; text-align: center;">
-    Register
-</h3>
-<form id="register-form" class="form-group" method="POST">
-    {% csrf_token %}
-    <div class="row">
-        <div class="input-field col s12">
-            {{ form.username }}
-            <label for="id_username" data-error="Username already taken" style="color:black; font-family: cursive;">GLUG Username</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="input-field col s12">
-            {{ form.password1 }}
-            <label for="id_password" style="color:black; font-family: cursive;">Password</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="input-field col s12">
-            {{ form.password2 }}
-            <label for="id_password2" style="color:black; font-family: cursive;">Repeat Password</label>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col s8">
-            <u><a href="{% url 'index' %}" style="color: blue; font-weight: bolder; align-content: space-around; font-size: 20px;">Login</a></u>
-        </div>
-        <div class="col s4">
-            <div class="right">
-                <button class="btn blue waves-effect waves-light pull-s12">Register</button>
+
+<head>
+    <title>GLUG</title>
+</head>
+<style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins&display=swap');
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: linear-gradient(to right, #3F5EFB, #FC466B);
+        font-family: 'Open Sans', sans-serif;
+        font-family: 'Poppins', sans-serif;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+    
+    .container {
+        width: 550px;
+        margin-top: auto;
+        margin-bottom: auto;
+        display: flexbox;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.3);
+        position: relative;
+        justify-content: center;
+        border-radius: 40px;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgb(30, 255, 169), 0 6px 20px 0 rgb(0, 0, 0);
+        -webkit-box-shadow: 0 5px 8px 0 rgb(30, 255, 169), 0 6px 20px 0 rgb(0, 0, 0);
+        -moz-box-shadow: 0 4px 8px 0 rgb(30, 255, 169), 0 6px 20px 0 rgb(0, 0, 0);
+        border-left: 2px solid rgb(30, 255, 169);
+        border-top: 2px solid rgb(30, 255, 169);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+    }
+    
+    .bantu {
+        background-image: url(https://images.unsplash.com/photo-1496192507750-96f7d79d74be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1351&q=80);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+    
+    #hi {
+        height: 250px;
+        width: 250px;
+        left: 30%;
+        position: relative;
+        z-index: 1;
+        display: flexbox;
+        flex-direction: row;
+    }
+    
+    .conta {
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top: 30px;
+        z-index: 1;
+        left: 30%;
+        width: 800px;
+        margin-inline-start: 100px;
+        display: flexbox;
+        flex-direction: row;
+    }
+    
+    .forma {
+        font-weight: 500;
+        color: #fff;
+        margin-top: 0;
+        margin-bottom: 60px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    form input {
+        background: transparent;
+        width: 200px;
+        padding: 1em;
+        margin-bottom: 2em;
+        border: none;
+        border-left: 1px solid rgba(255, 255, 255, 0.3);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 5000px;
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
+        box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
+        color: #fff;
+        font-family: Montserrat, sans-serif;
+        font-weight: 500;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    form input:hover {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    form input[type="email"]:focus,
+    form input[type="password"]:focus {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    form input[type="button"] {
+        margin-top: 10px;
+        width: 150px;
+        font-size: 1rem;
+    }
+    
+    form input[type="button"]:hover {
+        cursor: pointer;
+    }
+    
+    form input[type="button"]:active {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    form:hover {
+        margin: 4px;
+    }
+    
+     ::-webkit-input-placeholder {
+        font-family: Montserrat, sans-serif;
+        font-weight: 400;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    
+     ::-moz-placeholder {
+        font-family: Montserrat, sans-serif;
+        font-weight: 400;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    
+     :-ms-input-placeholder {
+        font-family: Montserrat, sans-serif;
+        font-weight: 400;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    
+     ::-ms-input-placeholder {
+        font-family: Montserrat, sans-serif;
+        font-weight: 400;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    
+     ::placeholder {
+        font-family: Montserrat, sans-serif;
+        font-weight: 400;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+</style>
+
+<body>
+    <h3 class="forma" style="color: black; font-weight: bolder; text-align: center;">
+        Register
+    </h3>
+    <form id="register-form" class="form-group" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.username }}
+                <label for="id_username" data-error="Username already taken" style="color:black;">GLUG Username</label>
             </div>
         </div>
-    </div>
-</form>
-{% endblock %}
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.password1 }}
+                <label for="id_password" style="color:black;">Password</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.password2 }}
+                <label for="id_password2" style="color:black;">Repeat Password</label>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col s8">
+                <u><a href="{% url 'index' %}" style="color: blue; font-weight: bolder; align-content: space-around; font-size: 20px;">Login</a></u>
+            </div>
+            <div class="col s4">
+                <div class="right">
+                    <button class="btn waves-effect waves-light pull-s12" style="background-color: rgb(11, 102, 145); color:rgb(208, 255, 0);">Register</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% endblock %}
+</body>
