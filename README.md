@@ -33,7 +33,6 @@ This is GLUG Messaging App built in Django and Django-Rest-Framework.
 4. Install the requirements.
 
     ```
-    cd reviewbook
     pip3 install -r requirements.txt
 
     ```
