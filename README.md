@@ -57,6 +57,7 @@ This is GLUG Messaging App built in Django and Django-Rest-Framework.
 GLUG-Messaging-App uses the following technologies:
 
 + HTML/CSS/JavaScript
++ Bootstrap
 + Python(Django)
 + Django Rest Framework
 
